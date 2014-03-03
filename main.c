@@ -19,8 +19,8 @@ int main(int argc, char *argv[]) {
     SDL_Surface *fenetre, *balle, *palette_d, *palette_g;
     fenetre = SDL_SetVideoMode(500, 500, 32, SDL_HWSURFACE);
     balle = SDL_CreateRGBSurface(SDL_HWSURFACE, 10, 10, 32, 0, 0, 0, 0);
-    palette_d = SDL_CreateRGBSurface(SDL_HWSURFACE, 10, 50, 0, 0, 0, 0, 0);
-    palette_g = SDL_CreateRGBSurface(SDL_HWSURFACE, 10, 50, 0, 0, 0, 0, 0);
+    palette_g = SDL_CreateRGBSurface(SDL_HWSURFACE, 10, 50, 32, 0, 0, 0, 0);
+    palette_d = SDL_CreateRGBSurface(SDL_HWSURFACE, 10, 50, 32, 0, 0, 0, 0);
 
     Uint32 color_bg, color_fg;
     color_bg = SDL_MapRGB(fenetre->format, 0, 0, 0);
@@ -29,15 +29,17 @@ int main(int argc, char *argv[]) {
     SDL_FillRect(fenetre, NULL, color_bg);
     SDL_FillRect(balle, NULL, color_fg);
     SDL_FillRect(palette_d, NULL, color_fg);
-    SDL_FillRect(palette_g, NULL, color_bg);
+    SDL_FillRect(palette_g, NULL, color_fg);
 
     SDL_Rect pos_balle, pos_palette_g, pos_palette_d;
     pos_balle.x = (fenetre->w / 2) - (balle->w / 2);
     pos_balle.y = (fenetre->h / 2) - (balle->h / 2);
-    pos_palette_d.x = fenetre->w - palette_d->w - 10;
-    pos_palette_d.y = (fenetre->h / 2) - (palette_d->h / 2);
     pos_palette_g.x = 10;
     pos_palette_g.y = (fenetre->h / 2) - (palette_g->h / 2);
+    pos_palette_d.x = fenetre->w - palette_d->w - 10;
+    pos_palette_d.y = (fenetre->h / 2) - (palette_d->h / 2);
+    printf("x = %d, y = %d\n", pos_palette_g.x, pos_palette_g.y);
+    printf("x = %d, y = %d\n", pos_palette_d.x, pos_palette_d.y);
 
     TTF_Font *font_verdana;
     font_verdana = TTF_OpenFont("verdana.ttf", 24);
@@ -72,13 +74,14 @@ int main(int argc, char *argv[]) {
                     printf("Quit event.\n");
                     quit = 1;
                     break;
-                /*
                 case SDL_KEYDOWN:
                     printf("KeyDown event.\n");
                     switch (event.key.keysym.sym) {
                         case SDLK_ESCAPE:
+                        case SDLK_q:
                             quit = 1;
                             break;
+                        /*
                         case SDLK_RIGHT:
                             personnage = IMG_Load("pacman.jpg");
                             personnage_position.x += 50;
@@ -95,8 +98,8 @@ int main(int argc, char *argv[]) {
                             personnage = IMG_Load("pacman_up.jpg");
                             personnage_position.y -= 50;
                             break;
+                        */
                     }
-                    */
                     break;
                 case SDL_MOUSEMOTION:
                     /*
@@ -132,6 +135,9 @@ int main(int argc, char *argv[]) {
         }
         /* Sreen refresh */
         SDL_FillRect(fenetre, NULL, color_bg);
+        SDL_BlitSurface(balle, NULL, fenetre, &pos_balle);
+        SDL_BlitSurface(palette_g, NULL, fenetre, &pos_palette_g);
+        SDL_BlitSurface(palette_d, NULL, fenetre, &pos_palette_d);
         /*
         vlineRGBA(fenetre,
                   mouse_x, 0, fenetre->h,
