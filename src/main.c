@@ -21,37 +21,37 @@ int main(int argc, char *argv[]) {
     }
 
     SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
-    float balle_direction = M_TAU * 1 / 6;
-    float balle_velocite = 10;
+    float ball_heading = M_TAU * 1 / 6;
+    float ball_velocity = 10;
 
-    SDL_Surface *fenetre, *balle, *palette_d, *palette_g;
-    fenetre = SDL_SetVideoMode(500, 500, 32, SDL_HWSURFACE);
-    balle = SDL_CreateRGBSurface(SDL_HWSURFACE, 1, 1, 32, 0, 0, 0, 0);
-    palette_g = SDL_CreateRGBSurface(SDL_HWSURFACE, 10, 50, 32, 0, 0, 0, 0);
-    palette_d = SDL_CreateRGBSurface(SDL_HWSURFACE, 10, 50, 32, 0, 0, 0, 0);
+    SDL_Surface *window, *ball, *paddle_r, *paddle_l;
+    window = SDL_SetVideoMode(500, 500, 32, SDL_HWSURFACE);
+    ball = SDL_CreateRGBSurface(SDL_HWSURFACE, 1, 1, 32, 0, 0, 0, 0);
+    paddle_l = SDL_CreateRGBSurface(SDL_HWSURFACE, 10, 50, 32, 0, 0, 0, 0);
+    paddle_r = SDL_CreateRGBSurface(SDL_HWSURFACE, 10, 50, 32, 0, 0, 0, 0);
 
     Uint32 color_bg, color_fg;
-    color_bg = SDL_MapRGB(fenetre->format, 0, 0, 0);
-    color_fg = SDL_MapRGB(fenetre->format, 255, 255, 255);
+    color_bg = SDL_MapRGB(window->format, 0, 0, 0);
+    color_fg = SDL_MapRGB(window->format, 255, 255, 255);
 
-    SDL_FillRect(fenetre, NULL, color_bg);
-    SDL_FillRect(balle, NULL, color_fg);
-    SDL_FillRect(palette_d, NULL, color_fg);
-    SDL_FillRect(palette_g, NULL, color_fg);
+    SDL_FillRect(window, NULL, color_bg);
+    SDL_FillRect(ball, NULL, color_fg);
+    SDL_FillRect(paddle_r, NULL, color_fg);
+    SDL_FillRect(paddle_l, NULL, color_fg);
 
     struct SDL_Rect_f {
         float x, y;
     };
-    SDL_Rect pos_balle, pos_palette_g, pos_palette_d;
-    struct SDL_Rect_f pos_balle_f;
-    pos_balle_f.x = (fenetre->w / 2) - (balle->w / 2);
-    pos_balle_f.y = (fenetre->h / 2) - (balle->h / 2);
-    pos_palette_g.x = 10;
-    pos_palette_g.y = (fenetre->h / 2) - (palette_g->h / 2);
-    pos_palette_d.x = fenetre->w - palette_d->w - 10;
-    pos_palette_d.y = (fenetre->h / 2) - (palette_d->h / 2);
-    printf("x = %d, y = %d\n", pos_palette_g.x, pos_palette_g.y);
-    printf("x = %d, y = %d\n", pos_palette_d.x, pos_palette_d.y);
+    SDL_Rect pos_ball, pos_paddle_l, pos_paddle_r;
+    struct SDL_Rect_f pos_ball_f;
+    pos_ball_f.x = (window->w / 2) - (ball->w / 2);
+    pos_ball_f.y = (window->h / 2) - (ball->h / 2);
+    pos_paddle_l.x = 10;
+    pos_paddle_l.y = (window->h / 2) - (paddle_l->h / 2);
+    pos_paddle_r.x = window->w - paddle_r->w - 10;
+    pos_paddle_r.y = (window->h / 2) - (paddle_r->h / 2);
+    printf("x = %d, y = %d\n", pos_paddle_l.x, pos_paddle_l.y);
+    printf("x = %d, y = %d\n", pos_paddle_r.x, pos_paddle_r.y);
 
     TTF_Font *font_verdana;
     font_verdana = TTF_OpenFont("verdana.ttf", 24);
@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
     chrono = TTF_RenderText_Blended(font_verdana, chrono_text, font_color);
     SDL_Rect chrono_position;
     chrono_position.x = 20;
-    chrono_position.y = fenetre->h - chrono->h;
+    chrono_position.y = window->h - chrono->h;
 
     SDL_Surface *mouse_coords;
     char mouse_coords_text[20];
@@ -71,8 +71,8 @@ int main(int argc, char *argv[]) {
     int mouse_y = 0;
     mouse_coords = TTF_RenderText_Blended(font_verdana, "0, 0", font_color);
     SDL_Rect mouse_coords_position;
-    mouse_coords_position.x = fenetre->w - mouse_coords->w;
-    mouse_coords_position.y = fenetre->h - mouse_coords->h;
+    mouse_coords_position.x = window->w - mouse_coords->w;
+    mouse_coords_position.y = window->h - mouse_coords->h;
     */
 
     SDL_Event event;
@@ -105,15 +105,15 @@ int main(int argc, char *argv[]) {
                             break;
                         */
                         case SDLK_DOWN:
-                            pos_palette_d.y = fmin(
-                                fenetre->h - palette_d->h,
-                                pos_palette_d.y + palette_d->h / 4
+                            pos_paddle_r.y = fmin(
+                                window->h - paddle_r->h,
+                                pos_paddle_r.y + paddle_r->h / 4
                                 );
                             break;
                         case SDLK_UP:
-                            pos_palette_d.y = fmax(
+                            pos_paddle_r.y = fmax(
                                 0,
-                                pos_palette_d.y - palette_d->h / 4
+                                pos_paddle_r.y - paddle_r->h / 4
                                 );
                             break;
                         case SDLK_SPACE:
@@ -129,8 +129,8 @@ int main(int argc, char *argv[]) {
                     mouse_coords = TTF_RenderText_Blended(font_verdana,
                                                           mouse_coords_text,
                                                           font_color);
-                    mouse_coords_position.x = fenetre->w - mouse_coords->w;
-                    mouse_coords_position.y = fenetre->h - mouse_coords->h;
+                    mouse_coords_position.x = window->w - mouse_coords->w;
+                    mouse_coords_position.y = window->h - mouse_coords->h;
                     mouse_x = event.motion.x;
                     mouse_y = event.motion.y;
                     */
@@ -157,88 +157,88 @@ int main(int argc, char *argv[]) {
         if (!paused) {
             /* Ball's physics */
             /* Advance ball. */
-            pos_balle_f.x = pos_balle_f.x + balle_velocite * cosf(balle_direction);
-            pos_balle_f.y = pos_balle_f.y - balle_velocite * sinf(balle_direction);
-            if (pos_balle_f.y <= 0) {
+            pos_ball_f.x = pos_ball_f.x + ball_velocity * cosf(ball_heading);
+            pos_ball_f.y = pos_ball_f.y - ball_velocity * sinf(ball_heading);
+            if (pos_ball_f.y <= 0) {
                 /* Top wall collision */
-                pos_balle_f.y = -pos_balle_f.y;
-                balle_direction = M_TAU - balle_direction;
-                vlineRGBA(fenetre,
-                          pos_balle_f.x + balle->w / 2, 0, fenetre->h / 4,
+                pos_ball_f.y = -pos_ball_f.y;
+                ball_heading = M_TAU - ball_heading;
+                vlineRGBA(window,
+                          pos_ball_f.x + ball->w / 2, 0, window->h / 4,
                           255, 0, 0, 255);
-                printf("Direction : %f\n", balle_direction / M_TAU);
+                printf("Direction : %f\n", ball_heading / M_TAU);
             }
-            if (pos_balle_f.y >= fenetre->h - balle->h) {
+            if (pos_ball_f.y >= window->h - ball->h) {
                 /* Bottom wall collision */
-                pos_balle_f.y = fenetre->h
-                              - (pos_balle_f.y + balle->h - fenetre->h)
-                              - balle->h;
-                balle_direction = M_TAU - balle_direction;
-                vlineRGBA(fenetre,
-                          pos_balle_f.x + balle->w / 2, fenetre->h * 3 / 4, fenetre->h,
+                pos_ball_f.y = window->h
+                              - (pos_ball_f.y + ball->h - window->h)
+                              - ball->h;
+                ball_heading = M_TAU - ball_heading;
+                vlineRGBA(window,
+                          pos_ball_f.x + ball->w / 2, window->h * 3 / 4, window->h,
                           255, 0, 0, 255);
-                printf("Direction : %f\n", balle_direction / M_TAU);
+                printf("Direction : %f\n", ball_heading / M_TAU);
             }
-            if (pos_balle_f.x <= 0) {
+            if (pos_ball_f.x <= 0) {
                 /* Left wall collision */
-                pos_balle_f.x = -pos_balle_f.x;
-                if (balle_direction > M_TAU / 2) {
-                    balle_direction = M_TAU - (balle_direction - M_TAU / 2);
+                pos_ball_f.x = -pos_ball_f.x;
+                if (ball_heading > M_TAU / 2) {
+                    ball_heading = M_TAU - (ball_heading - M_TAU / 2);
                 } else {
-                    balle_direction = M_TAU - (balle_direction + M_TAU / 2);
+                    ball_heading = M_TAU - (ball_heading + M_TAU / 2);
                 }
-                hlineRGBA(fenetre,
-                          0, fenetre->w / 4, pos_balle_f.y + balle->h / 2,
+                hlineRGBA(window,
+                          0, window->w / 4, pos_ball_f.y + ball->h / 2,
                           255, 0, 0, 255);
-                printf("Direction : %f\n", balle_direction / M_TAU);
+                printf("Direction : %f\n", ball_heading / M_TAU);
             }
-            if (pos_balle_f.x >= fenetre->w - balle->w) {
+            if (pos_ball_f.x >= window->w - ball->w) {
                 /* Right wall collision */
-                pos_balle_f.x = fenetre->w
-                              - (pos_balle_f.x + balle->w - fenetre->w)
-                              - balle->w;
-                if (balle_direction > M_TAU * 3 / 4) {
-                    balle_direction = M_TAU / 2 + (M_TAU - balle_direction);
+                pos_ball_f.x = window->w
+                              - (pos_ball_f.x + ball->w - window->w)
+                              - ball->w;
+                if (ball_heading > M_TAU * 3 / 4) {
+                    ball_heading = M_TAU / 2 + (M_TAU - ball_heading);
                 } else {
-                    balle_direction = M_TAU / 2 - balle_direction;
+                    ball_heading = M_TAU / 2 - ball_heading;
                 }
-                hlineRGBA(fenetre,
-                          fenetre->w * 3 / 4, fenetre->w,
-                          pos_balle_f.y + balle->h / 2,
+                hlineRGBA(window,
+                          window->w * 3 / 4, window->w,
+                          pos_ball_f.y + ball->h / 2,
                           255, 0, 0, 255);
-                printf("Direction : %f\n", balle_direction / M_TAU);
+                printf("Direction : %f\n", ball_heading / M_TAU);
             }
-            pos_balle.x = pos_balle_f.x;
-            pos_balle.y = pos_balle_f.y;
+            pos_ball.x = pos_ball_f.x;
+            pos_ball.y = pos_ball_f.y;
         }
 
         /* Computer's move */
 
         /* Sreen refresh */
-        //SDL_FillRect(fenetre, NULL, color_bg);
-        SDL_BlitSurface(balle, NULL, fenetre, &pos_balle);
-        SDL_BlitSurface(palette_g, NULL, fenetre, &pos_palette_g);
-        SDL_BlitSurface(palette_d, NULL, fenetre, &pos_palette_d);
+        //SDL_FillRect(window, NULL, color_bg);
+        SDL_BlitSurface(ball, NULL, window, &pos_ball);
+        SDL_BlitSurface(paddle_l, NULL, window, &pos_paddle_l);
+        SDL_BlitSurface(paddle_r, NULL, window, &pos_paddle_r);
         /*
-        vlineRGBA(fenetre,
-                  mouse_x, 0, fenetre->h,
+        vlineRGBA(window,
+                  mouse_x, 0, window->h,
                   255, 0, 0, 255);
-        hlineRGBA(fenetre,
-                  0, fenetre->w, mouse_y,
+        hlineRGBA(window,
+                  0, window->w, mouse_y,
                   255, 0, 0, 255);
         sprintf(chrono_text, "%d", now);
         chrono = TTF_RenderText_Blended(font_verdana, chrono_text, font_color);
-        SDL_BlitSurface(chrono, NULL, fenetre, &chrono_position);
-        SDL_BlitSurface(mouse_coords, NULL, fenetre, &mouse_coords_position);
+        SDL_BlitSurface(chrono, NULL, window, &chrono_position);
+        SDL_BlitSurface(mouse_coords, NULL, window, &mouse_coords_position);
         */
-        SDL_Flip(fenetre);
+        SDL_Flip(window);
         before = now;
     }
     printf("Running time: %d\n", SDL_GetTicks());
-    SDL_FreeSurface(fenetre);
-    SDL_FreeSurface(balle);
-    SDL_FreeSurface(palette_g);
-    SDL_FreeSurface(palette_d);
+    SDL_FreeSurface(window);
+    SDL_FreeSurface(ball);
+    SDL_FreeSurface(paddle_l);
+    SDL_FreeSurface(paddle_r);
     TTF_CloseFont(font_verdana);
     SDL_Quit();
     TTF_Quit();
