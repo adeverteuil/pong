@@ -6,9 +6,16 @@
 //Move ball and collide with objects.
 static void move_ball(struct PongGame *game);
 
+//Serve ball.
+static void start_game(struct PongGame *game);
+
 struct PongGame *init_game(void) {
     struct PongGame *game;
     game = malloc(sizeof (struct PongGame));
+    if (!game) {
+        fprintf(stderr, "Couldn't allocate memory for game.\n");
+        exit(EXIT_FAILURE);
+    }
     game->state = GameStateIntro;
     game->ball = init_ball();
     return game;
@@ -26,7 +33,14 @@ void render_game(struct PongGame *game) {
 }
 
 void game_tick(struct PongGame *game) {
-    move_ball(game);
+    switch (game->state) {
+        case GameStateIntro:
+            start_game(game);
+            break;
+        case GameStatePlaying:
+            move_ball(game);
+            break;
+    }
 }
 
 void move_ball(struct PongGame *game){
@@ -35,4 +49,10 @@ void move_ball(struct PongGame *game){
 
     ball->x = ball->x + ball->velocity * cosf(ball->heading);
     ball->y = ball->y - ball->velocity * sinf(ball->heading);
+}
+
+void start_game(struct PongGame *game) {
+    game->ball.x = game->window->w / 2;
+    game->ball.y = game->window->h / 2;
+    game->state = GameStatePlaying;
 }
