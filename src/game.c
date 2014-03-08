@@ -22,7 +22,6 @@ void render_game(struct PongGame *game) {
     SDL_FillRect(game->window, NULL, color_bg);
     //Draw sprites.
     draw_image(ball.sprite, game->window, ball.x, ball.y);
-    printf("Drawing at: %d, %d\n", (int)ball.x, (int)ball.y);
     SDL_Flip(game->window);
 }
 
@@ -32,7 +31,8 @@ void game_tick(struct PongGame *game) {
 
 void move_ball(struct PongGame *game){
     struct PongBall *ball = &(game->ball);
+    SDL_Surface *window = game->window;
+
     ball->x = ball->x + ball->velocity * cosf(ball->heading);
     ball->y = ball->y - ball->velocity * sinf(ball->heading);
-    printf("Ball position: %f, %f\n", ball->x, ball->y);
 }
