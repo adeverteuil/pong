@@ -16,3 +16,6 @@ struct PongGame {
 
 //Initialize game state.
 struct PongGame *init_game(void);
+
+//Draw a frame of the game.
+void render_game(struct PongGame *game);

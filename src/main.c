@@ -50,6 +50,7 @@ void main_loop(struct PongGame *game) {
         /* TODO do game logic and updates */
 
         /* TODO do rendering */
+        render_game(game);
 
         // Frame rate control.
         if (now - before < interval) {
