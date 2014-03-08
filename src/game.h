@@ -19,3 +19,6 @@ struct PongGame *init_game(void);
 
 //Draw a frame of the game.
 void render_game(struct PongGame *game);
+
+//Compute game logic.
+void game_tick(struct PongGame *game);

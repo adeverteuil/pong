@@ -1,5 +1,6 @@
 #include <SDL.h>
 
+#include "math.h"
 #include "ball.h"
 
 void draw_image(SDL_Surface *src, SDL_Surface *dst, int x, int y) {

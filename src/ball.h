@@ -1,8 +1,3 @@
-#include <math.h>
-
-/* http://tauday.com/ */
-#define M_TAU (M_PI * 2)  /* No, really, pi is wrong... */
-
 struct PongBall {
     float x;
     float y;
@@ -13,4 +8,5 @@ struct PongBall {
 
 void draw_image(SDL_Surface *src, SDL_Surface *dst, int x, int y);
 
+//Initialize ball structure.
 struct PongBall init_ball(void);

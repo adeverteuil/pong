@@ -16,7 +16,7 @@ window.o:
 
 ball.o:
 	$(CC) -c $(CFLAGS) -o build/ball.o \
-	`sdl-config --cflags --libs` src/ball.c
+	`sdl-config --cflags --libs` -lm src/ball.c
 
 game.o:
 	$(CC) -c $(CFLAGS) -o build/game.o \

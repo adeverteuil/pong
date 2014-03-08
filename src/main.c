@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
 void main_loop(struct PongGame *game) {
     extern int game_running;
     SDL_Event event;
-    int now = 0, before = 0, interval = 1000 / 60;
+    int now = 0, before = 0, interval = 1000 / 10;
 
     while (game_running) {
         now = SDL_GetTicks();
@@ -48,6 +48,7 @@ void main_loop(struct PongGame *game) {
         handle_events();
 
         /* TODO do game logic and updates */
+        game_tick(game);
 
         /* TODO do rendering */
         render_game(game);
@@ -56,6 +57,7 @@ void main_loop(struct PongGame *game) {
         if (now - before < interval) {
             SDL_Delay(interval - (now - before));
         }
+        before = now;
     }
 }
 
