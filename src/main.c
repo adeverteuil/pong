@@ -4,6 +4,7 @@
 #include <SDL.h>
 
 #include "main.h"
+#include "window.h"
 
 //Initialize all resources.
 static void init_resources(struct PongGame *game);
@@ -60,17 +61,7 @@ void main_loop(void) {
 }
 
 void init_resources(struct PongGame *game) {
-    if (SDL_Init(SDL_INIT_VIDEO)) {
-        fprintf(stderr, "SDL error : %s\n", SDL_GetError());
-        exit(EXIT_FAILURE);
-    }
-    SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
-
-    game->window = SDL_SetVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32, WINDOW_FLAGS);
-    if (game->window == NULL) {
-        fprintf(stderr, "SDL error : %s\n", SDL_GetError());
-        exit(EXIT_FAILURE);
-    }
+    game->window = init_window();
 }
 
 struct PongGame *init_game(void) {
