@@ -1,16 +1,13 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
 #include <SDL.h>
 
+#include "game.h"
 #include "main.h"
 #include "window.h"
 
 //Initialize all resources.
 static void init_resources(struct PongGame *game);
-
-//Initialize game state.
-static struct PongGame *init_game(void);
 
 //Free all resources.
 static void free_resources(struct PongGame *game);
@@ -22,24 +19,25 @@ static void handle_events(void);
 static void handle_keydown_event(SDLKey keysym);
 
 //Main game loop.
-static void main_loop(void);
+static void main_loop(struct PongGame *game);
 
 static int game_running = 1;
 
 
 int main(int argc, char *argv[]) {
+    //Game is in dynamic memory.
     struct PongGame *game;
 
     printf("Program started.\n");
 
     game = init_game();
     init_resources(game);
-    main_loop();
+    main_loop(game);
     free_resources(game);
     exit(EXIT_SUCCESS);
 }
 
-void main_loop(void) {
+void main_loop(struct PongGame *game) {
     extern int game_running;
     SDL_Event event;
     int now = 0, before = 0, interval = 1000 / 60;
@@ -62,13 +60,6 @@ void main_loop(void) {
 
 void init_resources(struct PongGame *game) {
     game->window = init_window();
-}
-
-struct PongGame *init_game(void) {
-    struct PongGame *game;
-    game = malloc(sizeof (struct PongGame));
-    game->state = GameStateIntro;
-    return game;
 }
 
 void free_resources(struct PongGame *game) {
