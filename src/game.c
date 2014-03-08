@@ -35,6 +35,7 @@ void render_game(struct PongGame *game) {
 void game_tick(struct PongGame *game) {
     switch (game->state) {
         case GameStateIntro:
+            //TODO I guess the intro screen will appear here until a key is pressed.
             start_game(game);
             break;
         case GameStatePlaying:
@@ -49,10 +50,41 @@ void move_ball(struct PongGame *game){
 
     ball->x = ball->x + ball->velocity * cosf(ball->heading);
     ball->y = ball->y - ball->velocity * sinf(ball->heading);
+
+    //TODO Take into account the size of the ball.
+    if (ball->y <= 0) {
+        //Top wall collision.
+        ball->y = -ball->y;
+        ball->heading = M_TAU - ball->heading;
+    }
+    if (ball->y >= window->h) {
+        //Bottom wall collision.
+        ball->y = window->h - (ball->y - window->h);
+        ball->heading = M_TAU - ball->heading;
+    }
+    if (ball->x <= 0) {
+        //Left wall collision.
+        ball->x = -ball->x;
+        if (ball->heading > M_TAU / 2) {
+            ball->heading = M_TAU - (ball->heading - M_TAU / 2);
+        } else {
+            ball->heading = M_TAU - (ball->heading + M_TAU / 2);
+        }
+    }
+    if (ball->x >= window->w) {
+        //Right wall collision.
+        ball->x = window->w - (ball->x - window->w);
+        if (ball->heading > M_TAU * 3 / 4) {
+            ball->heading = M_TAU / 2 + (M_TAU - ball->heading);
+        } else {
+            ball->heading = M_TAU / 2 - ball->heading;
+        }
+    }
 }
 
 void start_game(struct PongGame *game) {
     game->ball.x = game->window->w / 2;
     game->ball.y = game->window->h / 2;
+    game->ball.heading = M_TAU * 1 / 16;
     game->state = GameStatePlaying;
 }

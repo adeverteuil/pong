@@ -18,7 +18,7 @@ struct PongBall init_ball(void) {
     ball.sprite = SDL_CreateRGBSurface(SDL_HWSURFACE, 10, 10, 32, 0, 0, 0, 0);
     ball.x = 0;
     ball.y = 0;
-    ball.heading = M_TAU * 1 / 6;
+    ball.heading = 0;
     ball.velocity = 10;
     color_fg = SDL_MapRGB(ball.sprite->format, 255, 255, 255);
     SDL_FillRect(ball.sprite, NULL, color_fg);
