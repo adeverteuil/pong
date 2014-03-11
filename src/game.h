@@ -1,6 +1,7 @@
 #include <SDL.h>
 
 #include "ball.h"
+#include "paddle.h"
 
 enum GameState {
     GameStateIntro,
@@ -12,6 +13,7 @@ struct PongGame {
     enum GameState state;
     SDL_Surface *window;
     struct PongBall ball;
+    struct PongPaddle paddle_r;
 };
 
 //Initialize game state.

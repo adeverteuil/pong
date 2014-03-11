@@ -18,17 +18,20 @@ struct PongGame *init_game(void) {
     }
     game->state = GameStateIntro;
     game->ball = init_ball();
+    game->paddle_r = init_paddle();
     return game;
 }
 
 void render_game(struct PongGame *game) {
     Uint32 color_bg = SDL_MapRGB(game->window->format, 0, 0, 0);
     struct PongBall ball = game->ball;
+    struct PongPaddle paddle_r = game->paddle_r;
 
     //Fill the window with background.
     SDL_FillRect(game->window, NULL, color_bg);
     //Draw sprites.
     draw_image(ball.sprite, game->window, ball.x, ball.y);
+    draw_image(paddle_r.sprite, game->window, paddle_r.x, paddle_r.y);
     SDL_Flip(game->window);
 }
 
@@ -86,5 +89,9 @@ void start_game(struct PongGame *game) {
     game->ball.x = game->window->w / 2;
     game->ball.y = game->window->h / 2;
     game->ball.heading = M_TAU * 1 / 16;
+
+    game->paddle_r.x = game->window->w - game->paddle_r.sprite->w * 2;
+    game->paddle_r.y = game->window->h / 2;
+
     game->state = GameStatePlaying;
 }

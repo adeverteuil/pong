@@ -68,6 +68,7 @@ void init_resources(struct PongGame *game) {
 void free_resources(struct PongGame *game) {
     SDL_Quit();
     SDL_FreeSurface(game->ball.sprite);
+    SDL_FreeSurface(game->paddle_r.sprite);
     free(game);
 }
 

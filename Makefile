@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS ?= -g
 
-OBJS = window.o ball.o game.o
+OBJS = window.o ball.o game.o paddle.o
 
 all: pong
 
@@ -21,3 +21,7 @@ ball.o:
 game.o:
 	$(CC) -c $(CFLAGS) -o build/game.o \
 	`sdl-config --cflags --libs` src/game.c
+
+paddle.o:
+	$(CC) -c $(CFLAGS) -o build/paddle.o \
+	`sdl-config --cflags --libs` src/paddle.c
