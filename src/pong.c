@@ -3,7 +3,7 @@
 #include <SDL.h>
 
 #include "game.h"
-#include "main.h"
+#include "pong.h"
 #include "window.h"
 
 //Initialize all resources.
