@@ -16,8 +16,11 @@ struct PongGame {
     struct PongPaddle paddle_r;
 };
 
+//Allocate memory for game state holder and return it's pointer.
+struct PongGame *create_game(void);
+
 //Initialize game state.
-struct PongGame *init_game(void);
+void init_game(struct PongGame *game);
 
 //Draw a frame of the game.
 void render_game(struct PongGame *game);

@@ -13,10 +13,13 @@ static void init_resources(struct PongGame *game);
 static void free_resources(struct PongGame *game);
 
 //Event handler.
-static void handle_events(void);
+static void handle_events(struct PongGame *game);
 
 //Keydown event handler.
-static void handle_keydown_event(SDLKey keysym);
+static void handle_keydown_event(SDLKey keysym, struct PongGame *game);
+
+//Keydown event handler for development phase.
+static void handle_keydown_hack(SDLKey keysym, struct PongGame *game);
 
 //Main game loop.
 static void main_loop(struct PongGame *game);
@@ -30,8 +33,9 @@ int main(int argc, char *argv[]) {
 
     printf("Program started.\n");
 
-    game = init_game();
+    game = create_game();
     init_resources(game);
+    init_game(game);
     main_loop(game);
     free_resources(game);
     exit(EXIT_SUCCESS);
@@ -45,7 +49,7 @@ void main_loop(struct PongGame *game) {
     while (game_running) {
         now = SDL_GetTicks();
 
-        handle_events();
+        handle_events(game);
 
         /* TODO do game logic and updates */
         game_tick(game);
@@ -72,7 +76,7 @@ void free_resources(struct PongGame *game) {
     free(game);
 }
 
-void handle_events(void) {
+void handle_events(struct PongGame *game) {
     SDL_Event event;
 
     while(SDL_PollEvent(&event)) {
@@ -82,17 +86,29 @@ void handle_events(void) {
                 game_running = 0;
                 break;
             case SDL_KEYDOWN:
-                handle_keydown_event(event.key.keysym.sym);
+                handle_keydown_event(event.key.keysym.sym, game);
+                handle_keydown_hack(event.key.keysym.sym, game);
                 break;
         }
     }
 }
 
-void handle_keydown_event(SDLKey keysym) {
+void handle_keydown_event(SDLKey keysym, struct PongGame *game) {
     switch (keysym) {
         case SDLK_ESCAPE:
         case SDLK_q:
             game_running = 0;
+            break;
+        case SDLK_DOWN:
+            game->paddle_r.y += 10;
+            break;
+    }
+}
+
+void handle_keydown_hack(SDLKey keysym, struct PongGame *game) {
+    switch (keysym) {
+        case SDLK_r:
+            init_game(game);
             break;
     }
 }

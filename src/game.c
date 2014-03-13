@@ -9,17 +9,20 @@ static void move_ball(struct PongGame *game);
 //Serve ball.
 static void start_game(struct PongGame *game);
 
-struct PongGame *init_game(void) {
+struct PongGame* create_game(void) {
     struct PongGame *game;
     game = malloc(sizeof (struct PongGame));
     if (!game) {
         fprintf(stderr, "Couldn't allocate memory for game.\n");
         exit(EXIT_FAILURE);
     }
+    return game;
+}
+
+void init_game(struct PongGame *game) {
     game->state = GameStateIntro;
     game->ball = init_ball();
     game->paddle_r = init_paddle();
-    return game;
 }
 
 void render_game(struct PongGame *game) {
