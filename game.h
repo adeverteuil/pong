@@ -1,3 +1,8 @@
+// File game.h
+
+#ifndef GAME_H
+#define GAME_H
+
 #include <SDL.h>
 
 #include "ball.h"
@@ -27,3 +32,5 @@ void render_game(struct PongGame *game);
 
 //Compute game logic.
 void game_tick(struct PongGame *game);
+
+#endif /* GAME_H */

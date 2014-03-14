@@ -1,3 +1,8 @@
+// File ball.h
+
+#ifndef BALL_H
+#define BALL_H
+
 struct PongBall {
     float x;
     float y;
@@ -11,3 +16,5 @@ void draw_image(SDL_Surface *src, SDL_Surface *dst, int x, int y);
 
 //Initialize ball structure.
 struct PongBall init_ball(void);
+
+#endif /* BALL_H */
