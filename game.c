@@ -51,8 +51,6 @@ void game_tick(struct PongGame *game) {
         case GameStatePlaying:
             do_ball_dynamics(game);
             computer_move(game);
-            //TODO remove this test function call.
-            update_scoreboard(&(game->scoreboard), 1, 0);
             break;
     }
 }
@@ -82,6 +80,7 @@ void do_ball_dynamics(struct PongGame *game){
         } else {
             ball->heading = M_TAU - (ball->heading + M_TAU / 2);
         }
+        update_scoreboard(&(game->scoreboard), 0, 1);
     }
     if (ball->x >= window->w) {
         //Right wall collision.
@@ -91,6 +90,7 @@ void do_ball_dynamics(struct PongGame *game){
         } else {
             ball->heading = M_TAU / 2 - ball->heading;
         }
+        update_scoreboard(&(game->scoreboard), 1, 0);
     }
     if (collision(ball->box, game->paddle_l.box) ||
         collision(ball->box, game->paddle_r.box)) {
