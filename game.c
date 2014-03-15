@@ -111,10 +111,10 @@ void start_game(struct PongGame *game) {
     game->ball.heading = M_TAU * 1 / 16;
 
     game->paddle_r.x = game->window->w - game->paddle_r.sprite->w * 2;
-    game->paddle_r.y = game->window->h / 2;
+    set_paddle_pos(&(game->paddle_r), game->window->h / 2, game->window);
 
     game->paddle_l.x = game->paddle_l.sprite->w * 2;
-    game->paddle_l.y = game->window->h / 2;
+    set_paddle_pos(&(game->paddle_l), game->window->h / 2, game->window);
 
     update_scoreboard(&(game->scoreboard), 0, 0);
 
