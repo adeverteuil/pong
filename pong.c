@@ -36,8 +36,8 @@ int main(int argc, char *argv[]) {
     printf("Program started.\n");
 
     game = create_game();
-    init_resources(game);
-    init_game(game);
+    init_resources(game);  //SDL stuff.
+    init_game(game);  //Game variables initial values.
     main_loop(game);
     free_resources(game);
     exit(EXIT_SUCCESS);
@@ -83,6 +83,7 @@ void init_resources(struct PongGame *game) {
 void free_resources(struct PongGame *game) {
     SDL_FreeSurface(game->ball.sprite);
     SDL_FreeSurface(game->paddle_r.sprite);
+    SDL_FreeSurface(game->paddle_l.sprite);
     SDL_FreeSurface(game->scoreboard.surface);
     TTF_CloseFont(game->scoreboard.font);
     TTF_Quit();
