@@ -23,6 +23,9 @@ static void handle_keydown_event(SDLKey keysym, struct PongGame *game);
 //Keydown event handler for development phase.
 static void handle_keydown_hack(SDLKey keysym, struct PongGame *game);
 
+//Mouse motion event handler.
+static void handle_mouse_motion_event(SDL_MouseMotionEvent event, struct PongGame *game);
+
 //Main game loop.
 static void main_loop(struct PongGame *game);
 
@@ -104,6 +107,8 @@ void handle_events(struct PongGame *game) {
                 handle_keydown_event(event.key.keysym.sym, game);
                 handle_keydown_hack(event.key.keysym.sym, game);
                 break;
+            case SDL_MOUSEMOTION:
+                handle_mouse_motion_event(event.motion, game);
         }
     }
 }
@@ -129,4 +134,8 @@ void handle_keydown_hack(SDLKey keysym, struct PongGame *game) {
             start_game(game);
             break;
     }
+}
+
+void handle_mouse_motion_event(SDL_MouseMotionEvent event, struct PongGame *game) {
+    set_paddle_pos(&(game->paddle_r), event.y, game->window);
 }
