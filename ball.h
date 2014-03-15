@@ -17,8 +17,11 @@ struct PongBall {
 //TODO move this in a .c file that will take care of all drawing functions.
 void draw_image(SDL_Surface *src, SDL_Surface *dst, int x, int y);
 
+//Return new ball structure, including a new SDL_Surface.
+struct PongBall new_ball(void);
+
 //Initialize ball structure.
-struct PongBall init_ball(void);
+void init_ball(struct PongBall *ball);
 
 //Compute new ball position from heading and velocity.
 void move_ball(struct PongBall *ball);

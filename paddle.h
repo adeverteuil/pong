@@ -12,8 +12,10 @@ struct PongPaddle {
     SDL_Surface *sprite;
 };
 
+//Return new paddle structure, including a new SDL_Surface.
+struct PongPaddle new_paddle(void);
 //Initialize paddle structure.
-struct PongPaddle init_paddle(void);
+void init_paddle(struct PongPaddle *paddle);
 
 //Center paddle on pixel y from the top.
 void set_paddle_pos(struct PongPaddle *paddle, int pos_y, SDL_Surface *window);

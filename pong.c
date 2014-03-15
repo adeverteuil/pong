@@ -126,7 +126,7 @@ void handle_keydown_event(SDLKey keysym, struct PongGame *game) {
 void handle_keydown_hack(SDLKey keysym, struct PongGame *game) {
     switch (keysym) {
         case SDLK_r:
-            init_game(game);
+            start_game(game);
             break;
     }
 }

@@ -30,6 +30,9 @@ struct PongGame *create_game(void);
 //Initialize game state.
 void init_game(struct PongGame *game);
 
+//Serve ball.
+void start_game(struct PongGame *game);
+
 //Draw a frame of the game.
 void render_game(struct PongGame *game);
 

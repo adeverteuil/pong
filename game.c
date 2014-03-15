@@ -6,9 +6,6 @@
 //Move ball and collide with objects.
 static void do_ball_dynamics(struct PongGame *game);
 
-//Serve ball.
-static void start_game(struct PongGame *game);
-
 //Computer's move.
 static void computer_move(struct PongGame *game);
 
@@ -24,9 +21,9 @@ struct PongGame* create_game(void) {
 
 void init_game(struct PongGame *game) {
     game->state = GameStateIntro;
-    game->ball = init_ball();
-    game->paddle_r = init_paddle();
-    game->paddle_l = init_paddle();
+    game->ball = new_ball();
+    game->paddle_r = new_paddle();
+    game->paddle_l = new_paddle();
 }
 
 void render_game(struct PongGame *game) {
@@ -118,6 +115,8 @@ void start_game(struct PongGame *game) {
 
     game->paddle_l.x = game->paddle_l.sprite->w * 2;
     game->paddle_l.y = game->window->h / 2;
+
+    update_scoreboard(&(game->scoreboard), 0, 0);
 
     game->state = GameStatePlaying;
 }
