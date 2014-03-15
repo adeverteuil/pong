@@ -9,6 +9,9 @@ static void move_ball(struct PongGame *game);
 //Serve ball.
 static void start_game(struct PongGame *game);
 
+//Computer's move.
+static void computer_move(struct PongGame *game);
+
 struct PongGame* create_game(void) {
     struct PongGame *game;
     game = malloc(sizeof (struct PongGame));
@@ -23,18 +26,21 @@ void init_game(struct PongGame *game) {
     game->state = GameStateIntro;
     game->ball = init_ball();
     game->paddle_r = init_paddle();
+    game->paddle_l = init_paddle();
 }
 
 void render_game(struct PongGame *game) {
     Uint32 color_bg = SDL_MapRGB(game->window->format, 0, 0, 0);
     struct PongBall ball = game->ball;
     struct PongPaddle paddle_r = game->paddle_r;
+    struct PongPaddle paddle_l = game->paddle_l;
 
     //Fill the window with background.
     SDL_FillRect(game->window, NULL, color_bg);
     //Draw sprites.
     draw_image(ball.sprite, game->window, ball.x, ball.y);
     draw_image(paddle_r.sprite, game->window, paddle_r.x, paddle_r.y);
+    draw_image(paddle_l.sprite, game->window, paddle_l.x, paddle_l.y);
     SDL_Flip(game->window);
 }
 
@@ -46,6 +52,7 @@ void game_tick(struct PongGame *game) {
             break;
         case GameStatePlaying:
             move_ball(game);
+            computer_move(game);
             break;
     }
 }
@@ -88,6 +95,18 @@ void move_ball(struct PongGame *game){
     }
 }
 
+void computer_move(struct PongGame *game) {
+    struct PongPaddle *paddle_l = &(game->paddle_l);
+
+    //Match the y position with that of the ball's.
+    paddle_l->y = game->ball.y;
+    if (paddle_l->y > (game->window->h - paddle_l->sprite->h / 2)) {
+        paddle_l->y = game->window->h - paddle_l->sprite->h / 2;
+    } else if (paddle_l->y < paddle_l->sprite->h / 2) {
+        paddle_l->y = paddle_l->sprite->h / 2;
+    }
+}
+
 void start_game(struct PongGame *game) {
     game->ball.x = game->window->w / 2;
     game->ball.y = game->window->h / 2;
@@ -95,6 +114,9 @@ void start_game(struct PongGame *game) {
 
     game->paddle_r.x = game->window->w - game->paddle_r.sprite->w * 2;
     game->paddle_r.y = game->window->h / 2;
+
+    game->paddle_l.x = game->paddle_l.sprite->w * 2;
+    game->paddle_l.y = game->window->h / 2;
 
     game->state = GameStatePlaying;
 }

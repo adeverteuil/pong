@@ -11,7 +11,8 @@ SDL_Surface *init_window(void) {
         fprintf(stderr, "SDL error : %s\n", SDL_GetError());
         exit(EXIT_FAILURE);
     }
-    SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
+    //SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
+    SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_INTERVAL, SDL_DEFAULT_REPEAT_INTERVAL);
     window = SDL_SetVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32, WINDOW_FLAGS);
     if (window == NULL) {
         fprintf(stderr, "SDL error : %s\n", SDL_GetError());

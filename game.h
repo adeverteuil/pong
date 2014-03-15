@@ -19,6 +19,7 @@ struct PongGame {
     SDL_Surface *window;
     struct PongBall ball;
     struct PongPaddle paddle_r;
+    struct PongPaddle paddle_l;
 };
 
 //Allocate memory for game state holder and return it's pointer.

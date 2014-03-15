@@ -102,6 +102,9 @@ void handle_keydown_event(SDLKey keysym, struct PongGame *game) {
         case SDLK_DOWN:
             game->paddle_r.y += 10;
             break;
+        case SDLK_UP:
+            game->paddle_r.y -= 10;
+            break;
     }
 }
 
