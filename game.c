@@ -92,6 +92,10 @@ void do_ball_dynamics(struct PongGame *game){
             ball->heading = M_TAU / 2 - ball->heading;
         }
     }
+    if (collision(ball->box, game->paddle_l.box) ||
+        collision(ball->box, game->paddle_r.box)) {
+        printf("Collision!\n");
+    }
 }
 
 void computer_move(struct PongGame *game) {
