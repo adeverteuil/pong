@@ -2,6 +2,7 @@
 
 #include "math.h"
 #include "ball.h"
+#include "physics.h"
 
 void draw_image(SDL_Surface *src, SDL_Surface *dst, int x, int y) {
     SDL_Rect position;
@@ -24,4 +25,10 @@ struct PongBall init_ball(void) {
     SDL_FillRect(ball.sprite, NULL, color_fg);
 
     return ball;
+}
+
+void move_ball(struct PongBall *ball) {
+    ball->x = ball->x + ball->velocity * cosf(ball->heading);
+    ball->y = ball->y - ball->velocity * sinf(ball->heading);
+    set_bounding_box(&(ball->box), ball->sprite, ball->x, ball->y);
 }

@@ -3,6 +3,7 @@
 #include <SDL.h>
 
 #include "game.h"
+#include "paddle.h"
 #include "pong.h"
 #include "window.h"
 
@@ -50,11 +51,7 @@ void main_loop(struct PongGame *game) {
         now = SDL_GetTicks();
 
         handle_events(game);
-
-        /* TODO do game logic and updates */
         game_tick(game);
-
-        /* TODO do rendering */
         render_game(game);
 
         // Frame rate control.
@@ -100,10 +97,10 @@ void handle_keydown_event(SDLKey keysym, struct PongGame *game) {
             game_running = 0;
             break;
         case SDLK_DOWN:
-            game->paddle_r.y += 10;
+            move_paddle(&(game->paddle_r), 10, game->window);
             break;
         case SDLK_UP:
-            game->paddle_r.y -= 10;
+            move_paddle(&(game->paddle_r), -10, game->window);
             break;
     }
 }

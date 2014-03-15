@@ -4,7 +4,7 @@
 #include "game.h"
 
 //Move ball and collide with objects.
-static void move_ball(struct PongGame *game);
+static void do_ball_dynamics(struct PongGame *game);
 
 //Serve ball.
 static void start_game(struct PongGame *game);
@@ -51,18 +51,17 @@ void game_tick(struct PongGame *game) {
             start_game(game);
             break;
         case GameStatePlaying:
-            move_ball(game);
+            do_ball_dynamics(game);
             computer_move(game);
             break;
     }
 }
 
-void move_ball(struct PongGame *game){
+void do_ball_dynamics(struct PongGame *game){
     struct PongBall *ball = &(game->ball);
     SDL_Surface *window = game->window;
 
-    ball->x = ball->x + ball->velocity * cosf(ball->heading);
-    ball->y = ball->y - ball->velocity * sinf(ball->heading);
+    move_ball(ball);
 
     //TODO Take into account the size of the ball.
     if (ball->y <= 0) {
@@ -99,12 +98,7 @@ void computer_move(struct PongGame *game) {
     struct PongPaddle *paddle_l = &(game->paddle_l);
 
     //Match the y position with that of the ball's.
-    paddle_l->y = game->ball.y;
-    if (paddle_l->y > (game->window->h - paddle_l->sprite->h / 2)) {
-        paddle_l->y = game->window->h - paddle_l->sprite->h / 2;
-    } else if (paddle_l->y < paddle_l->sprite->h / 2) {
-        paddle_l->y = paddle_l->sprite->h / 2;
-    }
+    set_paddle_pos(paddle_l, game->ball.y, game->window);
 }
 
 void start_game(struct PongGame *game) {

@@ -1,6 +1,8 @@
 #include <SDL.h>
 
 #include "paddle.h"
+#include "game.h"
+#include "physics.h"
 
 struct PongPaddle init_paddle(void) {
     struct PongPaddle paddle;
@@ -13,4 +15,24 @@ struct PongPaddle init_paddle(void) {
     SDL_FillRect(paddle.sprite, NULL, color_fg);
 
     return paddle;
+}
+
+void set_paddle_pos(struct PongPaddle *paddle, int pos_y, SDL_Surface *window) {
+    paddle->y = pos_y;
+    if (paddle->y > (window->h - paddle->sprite->h / 2)) {
+        paddle->y = window->h - paddle->sprite->h / 2;
+    } else if (paddle->y < paddle->sprite->h / 2) {
+        paddle->y = paddle->sprite->h / 2;
+    }
+    set_bounding_box(&(paddle->box), paddle->sprite, paddle->x, paddle->y);
+}
+
+void move_paddle(struct PongPaddle *paddle, int dist, SDL_Surface *window) {
+    paddle->y += dist;
+    if (paddle->y > (window->h - paddle->sprite->h / 2)) {
+        paddle->y = window->h - paddle->sprite->h / 2;
+    } else if (paddle->y < paddle->sprite->h / 2) {
+        paddle->y = paddle->sprite->h / 2;
+    }
+    set_bounding_box(&(paddle->box), paddle->sprite, paddle->x, paddle->y);
 }
