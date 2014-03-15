@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <SDL.h>
+#include <SDL_ttf.h>
 
 #include "game.h"
 #include "paddle.h"
@@ -63,13 +64,29 @@ void main_loop(struct PongGame *game) {
 }
 
 void init_resources(struct PongGame *game) {
+    if (SDL_Init(SDL_INIT_VIDEO)) {
+        fprintf(stderr, "SDL error : %s\n", SDL_GetError());
+        exit(EXIT_FAILURE);
+    }
+    if (TTF_Init() == -1) {
+        printf("TTF_Init: %s\n", TTF_GetError());
+        exit(EXIT_FAILURE);
+    }
+
+    //SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
+    SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_INTERVAL, SDL_DEFAULT_REPEAT_INTERVAL);
+
     game->window = init_window();
+    game->scoreboard = init_scoreboard();
 }
 
 void free_resources(struct PongGame *game) {
-    SDL_Quit();
     SDL_FreeSurface(game->ball.sprite);
     SDL_FreeSurface(game->paddle_r.sprite);
+    SDL_FreeSurface(game->scoreboard.surface);
+    TTF_CloseFont(game->scoreboard.font);
+    TTF_Quit();
+    SDL_Quit();
     free(game);
 }
 

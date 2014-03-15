@@ -6,14 +6,14 @@ SDL_LDFLAGS := $(shell sdl-config --libs)
 
 CC = gcc
 CFLAGS = $(SDL_CFLAGS) -g
-LDFLAGS = $(SDL_LDFLAGS) -lm -lSDL_gfx
+LDFLAGS = $(SDL_LDFLAGS) -lm -lSDL_gfx -lSDL_ttf
 
 # End of configuration.
 
 .PHONY: all
 all: pong
 
-OBJS = pong.o window.o ball.o game.o paddle.o physics.o
+OBJS = pong.o window.o ball.o game.o paddle.o physics.o text.o
 
 pong: $(OBJS)
 
@@ -23,6 +23,7 @@ paddle.o: paddle.h
 pong.o: game.h pong.h window.h
 window.o: window.h
 physics.o: physics.h
+text.o: text.h
 
 .PHONY: clean
 clean:

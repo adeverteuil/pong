@@ -7,6 +7,7 @@
 
 #include "ball.h"
 #include "paddle.h"
+#include "text.h"
 
 enum GameState {
     GameStateIntro,
@@ -20,6 +21,7 @@ struct PongGame {
     struct PongBall ball;
     struct PongPaddle paddle_r;
     struct PongPaddle paddle_l;
+    struct ScoreBoard scoreboard;
 };
 
 //Allocate memory for game state holder and return it's pointer.

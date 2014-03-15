@@ -41,6 +41,7 @@ void render_game(struct PongGame *game) {
     draw_image(ball.sprite, game->window, ball.x, ball.y);
     draw_image(paddle_r.sprite, game->window, paddle_r.x, paddle_r.y);
     draw_image(paddle_l.sprite, game->window, paddle_l.x, paddle_l.y);
+    draw_image(game->scoreboard.surface, game->window, game->window->w / 2, 30);
     SDL_Flip(game->window);
 }
 
@@ -53,6 +54,8 @@ void game_tick(struct PongGame *game) {
         case GameStatePlaying:
             do_ball_dynamics(game);
             computer_move(game);
+            //TODO remove this test function call.
+            update_scoreboard(&(game->scoreboard), 1, 0);
             break;
     }
 }
