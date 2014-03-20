@@ -26,4 +26,7 @@ void init_ball(struct PongBall *ball);
 //Compute new ball position from heading and velocity.
 void move_ball(struct PongBall *ball);
 
+//Set ball position to center of window.
+void center_ball(struct PongBall *ball, SDL_Surface *window);
+
 #endif /* BALL_H */

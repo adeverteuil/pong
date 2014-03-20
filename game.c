@@ -74,27 +74,58 @@ void do_ball_dynamics(struct PongGame *game){
     }
     if (ball->x <= 0) {
         //Left wall collision.
+        /*
+         * This commented out code rebounds the ball off the side wall.
+         * Left here in case I want to leave this available as an option later.
         ball->x = -ball->x;
         if (ball->heading > M_TAU / 2) {
             ball->heading = M_TAU - (ball->heading - M_TAU / 2);
         } else {
             ball->heading = M_TAU - (ball->heading + M_TAU / 2);
         }
+        */
+        center_ball(&(game->ball), game->window);
         update_scoreboard(&(game->scoreboard), 0, 1);
     }
     if (ball->x >= window->w) {
         //Right wall collision.
+        /*
+         * This commented out code rebounds the ball off the side wall.
+         * Left here in case I want to leave this available as an option later.
         ball->x = window->w - (ball->x - window->w);
         if (ball->heading > M_TAU * 3 / 4) {
             ball->heading = M_TAU / 2 + (M_TAU - ball->heading);
         } else {
             ball->heading = M_TAU / 2 - ball->heading;
         }
+        */
+        center_ball(&(game->ball), game->window);
         update_scoreboard(&(game->scoreboard), 1, 0);
     }
+    /*
+     * TODO remove this part.
     if (collision(ball->box, game->paddle_l.box) ||
         collision(ball->box, game->paddle_r.box)) {
         printf("Collision!\n");
+    }
+    */
+    if (collision(ball->box, game->paddle_l.box)) {
+        //Left paddle collision.
+        ball->x = game->paddle_l.box.max_x + ball->sprite->w / 2;
+        if (ball->heading > M_TAU / 2) {
+            ball->heading = M_TAU - (ball->heading - M_TAU / 2);
+        } else {
+            ball->heading = M_TAU - (ball->heading + M_TAU / 2);
+        }
+    }
+    if (collision(ball->box, game->paddle_r.box)) {
+        //Right paddle collision.
+        ball->x = game->paddle_r.box.min_x - ball->sprite->w / 2;
+        if (ball->heading > M_TAU * 3 / 4) {
+            ball->heading = M_TAU / 2 + (M_TAU - ball->heading);
+        } else {
+            ball->heading = M_TAU / 2 - ball->heading;
+        }
     }
 }
 
@@ -106,9 +137,8 @@ void computer_move(struct PongGame *game) {
 }
 
 void start_game(struct PongGame *game) {
-    game->ball.x = game->window->w / 2;
-    game->ball.y = game->window->h / 2;
-    game->ball.heading = M_TAU * 1 / 16;
+    center_ball(&(game->ball), game->window);
+    game->ball.heading = M_TAU * 9 / 16;
 
     game->paddle_r.x = game->window->w - game->paddle_r.sprite->w * 2;
     set_paddle_pos(&(game->paddle_r), game->window->h / 2, game->window);

@@ -35,3 +35,8 @@ void move_ball(struct PongBall *ball) {
     ball->y = ball->y - ball->velocity * sinf(ball->heading);
     set_bounding_box(&(ball->box), ball->sprite, ball->x, ball->y);
 }
+
+void center_ball(struct PongBall *ball, SDL_Surface *window) {
+    ball->x = window->w / 2;
+    ball->y = window->h / 2;
+}
