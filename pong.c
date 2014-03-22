@@ -125,6 +125,10 @@ void handle_keydown_event(SDLKey keysym, struct PongGame *game) {
         case SDLK_UP:
             move_paddle(&(game->paddle_r), -10, game->window);
             break;
+        case SDLK_c:
+            game->options.crt_effect = !game->options.crt_effect;
+            printf("crt_effect %s.\n", game->options.crt_effect ? "on" : "off");
+            break;
     }
 }
 

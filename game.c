@@ -24,22 +24,7 @@ void init_game(struct PongGame *game) {
     game->ball = new_ball();
     game->paddle_r = new_paddle();
     game->paddle_l = new_paddle();
-}
-
-void render_game(struct PongGame *game) {
-    Uint32 color_bg = SDL_MapRGB(game->window->format, 0, 0, 0);
-    struct PongBall ball = game->ball;
-    struct PongPaddle paddle_r = game->paddle_r;
-    struct PongPaddle paddle_l = game->paddle_l;
-
-    //Fill the window with background.
-    SDL_FillRect(game->window, NULL, color_bg);
-    //Draw sprites.
-    draw_image(ball.sprite, game->window, ball.x, ball.y);
-    draw_image(paddle_r.sprite, game->window, paddle_r.x, paddle_r.y);
-    draw_image(paddle_l.sprite, game->window, paddle_l.x, paddle_l.y);
-    draw_image(game->scoreboard.surface, game->window, game->window->w / 2, 30);
-    SDL_Flip(game->window);
+    game->options.crt_effect = 0;
 }
 
 void game_tick(struct PongGame *game) {

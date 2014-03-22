@@ -6,6 +6,7 @@
 #include <SDL.h>
 
 #include "ball.h"
+#include "options.h"
 #include "paddle.h"
 #include "text.h"
 
@@ -22,6 +23,7 @@ struct PongGame {
     struct PongPaddle paddle_r;
     struct PongPaddle paddle_l;
     struct ScoreBoard scoreboard;
+    struct GameOptions options;
 };
 
 //Allocate memory for game state holder and return it's pointer.
@@ -32,9 +34,6 @@ void init_game(struct PongGame *game);
 
 //Serve ball.
 void start_game(struct PongGame *game);
-
-//Draw a frame of the game.
-void render_game(struct PongGame *game);
 
 //Compute game logic.
 void game_tick(struct PongGame *game);
