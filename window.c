@@ -1,3 +1,8 @@
+//File window.c
+
+#include <stdio.h>
+#include <SDL.h>
+
 #include "window.h"
 
 #define WINDOW_WIDTH 500

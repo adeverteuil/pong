@@ -1,3 +1,5 @@
+//File physics.c
+
 #include "physics.h"
 
 int collision(struct BoundingBox a, struct BoundingBox b) {

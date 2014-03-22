@@ -1,3 +1,5 @@
+//File pong.c
+
 #include <stdio.h>
 #include <math.h>
 #include <SDL.h>

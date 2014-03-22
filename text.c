@@ -1,3 +1,5 @@
+//File text.c
+
 #include "text.h"
 
 static TTF_Font *init_font();

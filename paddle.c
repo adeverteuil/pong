@@ -1,3 +1,5 @@
+//File paddle.c
+
 #include <SDL.h>
 
 #include "paddle.h"

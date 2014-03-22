@@ -1,3 +1,5 @@
+//File renderer.c
+
 #include <SDL.h>
 
 #include "renderer.h"
