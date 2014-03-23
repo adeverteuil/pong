@@ -26,6 +26,7 @@ void render_game(struct PongGame *game) {
     draw_image(paddle_r.sprite, game->window, paddle_r.x, paddle_r.y);
     draw_image(paddle_l.sprite, game->window, paddle_l.x, paddle_l.y);
     draw_image(game->scoreboard.surface, game->window, game->window->w / 2, 30);
+    draw_image(game->idletimetext.surface, game->window, game->window->w - game->idletimetext.surface->w / 2 - 10, 20);
     SDL_Flip(game->window);
 }
 

@@ -52,15 +52,17 @@ void main_loop(struct PongGame *game) {
     extern int game_running;
     SDL_Event event;
     int now = 0, before = 0, interval = 1000 / 10;
+    long framecount = 0;
 
     while (game_running) {
-        now = SDL_GetTicks();
-
+        framecount++;
         handle_events(game);
         game_tick(game);
+        update_idletimetext(&(game->idletimetext), interval, before, SDL_GetTicks(), framecount);
         render_game(game);
 
         // Frame rate control.
+        now = SDL_GetTicks();
         if (now - before < interval) {
             SDL_Delay(interval - (now - before));
         }
@@ -83,6 +85,7 @@ void init_resources(struct PongGame *game) {
 
     game->window = init_window();
     game->scoreboard = init_scoreboard();
+    game->idletimetext = init_idletimetext();
 }
 
 void free_resources(struct PongGame *game) {

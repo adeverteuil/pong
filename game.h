@@ -23,6 +23,7 @@ struct PongGame {
     struct PongPaddle paddle_r;
     struct PongPaddle paddle_l;
     struct ScoreBoard scoreboard;
+    struct IdleTimeText idletimetext;
     struct GameOptions options;
 };
 
