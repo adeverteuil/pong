@@ -3,6 +3,11 @@
 #ifndef AI_H
 #define AI_H
 
+enum ComputerBehavior {
+    AITheWall,
+    AIDelay,
+};
+
 #include "game.h"
 #include "paddle.h"
 

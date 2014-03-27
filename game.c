@@ -21,6 +21,7 @@ struct PongGame* create_game(void) {
 
 void init_game(struct PongGame *game) {
     game->state = GameStateIntro;
+    game->computer_behavior = AIDelay;
     game->ball = new_ball();
     game->paddle_r = new_paddle();
     game->paddle_l = new_paddle();

@@ -5,6 +5,7 @@
 
 #include <SDL.h>
 
+#include "ai.h"
 #include "ball.h"
 #include "options.h"
 #include "paddle.h"
@@ -18,6 +19,7 @@ enum GameState {
 
 struct PongGame {
     enum GameState state;
+    enum ComputerBehavior computer_behavior;
     SDL_Surface *window;
     struct PongBall ball;
     struct PongPaddle paddle_r;
