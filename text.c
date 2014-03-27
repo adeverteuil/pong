@@ -66,6 +66,5 @@ void update_idletimetext(struct IdleTimeText *text, int interval, int start, int
         SDL_FreeSurface(text->surface);
     }
     sprintf(string, "idle: %.2f%%", idle);
-    printf("notidle, interval, idle is %d, %d, %d, %.8f.\n", now-start, interval, idle);
     text->surface = TTF_RenderText_Solid(text->font, string, text->color);
 }
