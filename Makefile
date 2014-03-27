@@ -13,7 +13,7 @@ LDFLAGS = $(SDL_LDFLAGS) -lm -lSDL_gfx -lSDL_ttf
 .PHONY: all
 all: pong
 
-OBJS = pong.o window.o ball.o game.o paddle.o physics.o text.o options.o renderer.o
+OBJS = pong.o ai.o window.o ball.o game.o paddle.o physics.o text.o options.o renderer.o
 
 pong: $(OBJS)
 
@@ -26,6 +26,7 @@ physics.o: physics.h
 text.o: text.h
 options.o: options.h
 renderer.o: renderer.h
+ai.o: ai.h
 
 .PHONY: clean
 clean:

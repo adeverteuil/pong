@@ -3,13 +3,11 @@
 #include <stdlib.h>
 
 #include "math.h"
+#include "ai.h"
 #include "game.h"
 
 //Move ball and collide with objects.
 static void do_ball_dynamics(struct PongGame *game);
-
-//Computer's move.
-static void computer_move(struct PongGame *game);
 
 struct PongGame* create_game(void) {
     struct PongGame *game;
@@ -114,13 +112,6 @@ void do_ball_dynamics(struct PongGame *game){
             ball->heading = M_TAU / 2 - ball->heading;
         }
     }
-}
-
-void computer_move(struct PongGame *game) {
-    struct PongPaddle *paddle_l = &(game->paddle_l);
-
-    //Match the y position with that of the ball's.
-    set_paddle_pos(paddle_l, game->ball.y, game->window);
 }
 
 void start_game(struct PongGame *game) {
