@@ -14,9 +14,6 @@ struct PongBall {
     SDL_Surface *sprite;
 };
 
-//TODO move this in a .c file that will take care of all drawing functions.
-void draw_image(SDL_Surface *src, SDL_Surface *dst, int x, int y);
-
 //Return new ball structure, including a new SDL_Surface.
 struct PongBall new_ball(void);
 

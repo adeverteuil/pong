@@ -9,6 +9,14 @@
 
 static void fade_surface(SDL_Surface *surface);
 
+void draw_image(SDL_Surface *src, SDL_Surface *dst, int x, int y) {
+    SDL_Rect position;
+
+    position.x = x - src->w / 2;
+    position.y = y - src->h / 2;
+    SDL_BlitSurface(src, NULL, dst, &position);
+}
+
 void render_game(struct PongGame *game) {
     Uint32 color_bg = SDL_MapRGB(game->window->format, 8, 8, 8);
     struct PongBall ball = game->ball;

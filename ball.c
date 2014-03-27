@@ -6,14 +6,6 @@
 #include "ball.h"
 #include "physics.h"
 
-void draw_image(SDL_Surface *src, SDL_Surface *dst, int x, int y) {
-    SDL_Rect position;
-
-    position.x = x - src->w / 2;
-    position.y = y - src->h / 2;
-    SDL_BlitSurface(src, NULL, dst, &position);
-}
-
 struct PongBall new_ball(void) {
     struct PongBall ball;
     Uint32 color_fg;
